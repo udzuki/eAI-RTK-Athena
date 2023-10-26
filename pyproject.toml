@@ -1,0 +1,138 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eai-repair-toolkit-method-athena"
+readme = "README.md"
+license = { file = "LICENSE" }
+version = "1.0.0"
+requires-python = ">=3.8"
+dependencies = [
+    "eai-repair-toolkit >= 1, < 2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff ~= 1.1"
+]
+
+test = [
+    "pytest >= 7.4",
+    "pytest-cov >= 4.1",
+]
+
+[tool.ruff]
+line-length = 100
+ignore-init-module-imports = true
+src = ["src"]
+extend-exclude = [
+    "__init__.py",
+]
+
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E", "W",
+    # pydocstyle
+    "D",
+    # isort
+    "I",
+    # pyupgrade
+    "UP",
+    # pep8-naming
+    "N",
+    # flake8-2020
+    "YTT",
+    # flake8-bandit
+    # should not ignore exception without logging
+    "S110", "S112",
+    # flake8-blind-except
+    "BLE",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-errmsg
+    "EM103",
+    # flake8-quotes
+    "Q",
+    # flake8-type-checking
+    "TCH",
+    # flake8-return
+    "RET",
+    # flake8-use-pathlib
+    "PTH",
+    # pylint
+    "PLE", "PLR", "PLW",
+    # numpy
+    "NPY",
+    # tryceptor 
+    "TRY",
+]
+
+ignore = [
+    # too much
+    "D203",
+    "D213",
+    # false positive
+    "D401",
+    # too much
+    "D406",
+    "D407",
+    # only works for python>=3.10
+    "B905",
+    # too many returns
+    "PLR0911",
+    # too many args
+    "PLR0913",
+    # too many statements
+    "PLR0915",
+    # controversal
+    "PLR5501",
+    "PLW0603",
+    # too much
+    "PTH123",
+    # too much
+    "RET504",
+    "RET505",
+    # too much
+    "TRY003",
+]
+
+[tool.ruff.per-file-ignores]
+"conftest.py" = ["D"]
+"tests/**/*.py" = [
+    # allow tests to just write description
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D205",
+    # test uses assert
+    "B011",
+    "B015",
+    # magic value are useful in case of test
+    "PLR2004",
+]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.isort]
+section-order = ["future", "standard-library", "science", "third-party", "first-party", "local-folder"]
+known-first-party = ["src"]
+
+[tool.ruff.isort.sections]
+"science" = ["numpy", "pandas", "tensorflow", "keras", "pytorch", "h5py"]
+
+[tool.ruff.flake8-builtins]
+# tensorflow has "compile" method
+builtins-ignorelist = ["compile"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_classes = ["*Test"]
+python_files = ["test_*.py"]
+filterwarnings = ["ignore::DeprecationWarning"]
