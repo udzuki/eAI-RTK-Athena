@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "eai-repair-toolkit-method-athena"
+name = "eai-rtk-athena"
 readme = "README.md"
 license = { file = "LICENSE" }
 version = "1.0.0"
